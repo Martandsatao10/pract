@@ -1,369 +1,226 @@
 import java.util.*;
-class Employee {
-	Scanner sc= new Scanner(System.in);
-	String emp_name;
-	String address;
-	String mail_id;
-	long mobile_no;
-	int emp_id;
-	double basic_pay;
-	static int id=10000;
-	double net_salary,gross_salary;
-	double hra,da,pf,staff_club_fund;
 
-	 Employee(){
-		 id++;
+class publication{
+	private  String title;
+	private int price;
+	private  int copies;
+	private int total;
+	Scanner sc=new Scanner(System.in);		
+	public void settitle(String title) 
+	{
+		this.title=title;
 	}
-
-	void input() {
-	System.out.print("Enter the name of Employee: ");
-	emp_name=sc.nextLine();
-	System.out.print("Employee ID:  ");
-	emp_id=sc.nextInt();
-	emp_id=id;
-	System.out.print("Enter Address:  ");
-	address=sc.next();
-	System.out.print("Enter Mobile No.:  ");
-	mobile_no=sc.nextLong();
+	public void setcopies(int copies) 
+	{	
+		this.copies=copies;
 	}
-
-	void display(){
-		
-      	System.out.println("****************************************************************");
-		System.out.println("EMP NAME\tID \tADDRESS\t\tMOBILE");
-		System.out.println("****************************************************************");
-System.out.println(emp_name+"\t\t"+emp_id+"\t"+address+"\t\t"+mobile_no +"\n");
+	public String gettitle() {
+		return title;
 	}
-
-	void salary(){
-		da=basic_pay*.97;
-		hra=basic_pay*.10;
-		 pf=basic_pay*.12;
-		staff_club_fund=basic_pay*0.001;
-		gross_salary=basic_pay + hra;
-
-		int k=0;
-		while(k<3) {
-			System.out.println("   DOES DO YO HAVE DONE ANY EXTRA WORK \n\t1. PATENT \n\t2. OTHER BENIFICIAL WORK \n\t3.NO  ");
-			System.out.print("Choice::");
-			k=sc.nextInt();
-			if (k==1) 
-				gross_salary+=3000;
-			else if(k==2)
-				gross_salary+=2000;
-			else if(k==3)
-				break;
-			else
-				System.out.println("INVALID CHOICE.");
+	public int getTotal() {	
+		return total;
+	}
+	public int getCopies() {
+		return copies;
+	}
+	public int getprice() {
+		return price;
+	}
+	void read_publ() {		
+		System.out.print("enter title : ");
+		title=sc.next();
+		System.out.print("enter price:  ");
+		price=sc.nextInt();
+		System.out.print("enter copies: ");
+		copies=sc.nextInt();
+	}
+	void display() {
+		System.out.print(title+"\t"+price+"\t"+copies);
+	}
+	void sale_copy(int number) {
+		if (number <= copies)
+		{
+			copies=copies-number;
+			total=total + number*price;
+			System.out.println("\tYOU PURCHASED  "+number +"  COPIES \n\tYOU HAVE TO PAY :  "+(price*number));
 		}
-
-		net_salary=gross_salary-pf-staff_club_fund;
-		
-		System.out.println("=================================================================================");
+		else
+			System.out.println("     INSUFFICIENT STOCK!!!!!!!!!");
 	}
-
-	void salary_slip() {
-		
-		System.out.println("****************************************************************");
-		System.out.println(" BASIC   PAY 		:	"+basic_pay);
-		System.out.println(" HRA 	    	       	:	"+hra);
-		System.out.println(" PF   	    		       :	"+pf);
-		System.out.println(" GROSS SALARY       	: 	"+gross_salary);
-		System.out.println(" NET SALARY 	       	: 	"+ net_salary);
-		System.out.println("****************************************************************");
-	}
-
-
 }
-
-
-class Programmer extends Employee{
-
-		void read_programmer() {
-			input();
-			boolean a=false;
-			while(a==false) {
-			System.out.print("BASIC PAY[30000-40000]: ");
-			basic_pay=sc.nextDouble();
-			if(basic_pay>40000 || basic_pay<30000) {
-				System.out.println("SORRY!!!!!! BASIC  PAY FOR PROGRAMMER  MUST BETWEEN  [30000 - 40000]  \nTRY AGAIN.....");
-				a=false;
-			}
-			else
-				a=true;
-		}
-
-			System.out.println("=================================================================================");
-		}
-
-		static void search(Programmer arr[],int key,int n) {
-			
-			for(int i=0;i<n;i++) {
-				if (arr[i].emp_id==key) {
-					System.out.println("       EMPLOYEE  FOUND  ");
-					
-					arr[i].display();
-					arr[i].salary_slip();
-				}
-				else {
-					System.out.println("  EMPLOYEEE   WITH  ID  "+ key +"  NOT FOUND IN  PROGRAMMERS  ");
-				}
-			}
-		}
+//======================= CLASS book =======================//
+class book extends publication
+{
+	private String author;
+	void order_copies(int number){
+		int x=getCopies()+number;
+		setcopies(getCopies()+number);
+		System.out.println("\n\tORDER SUCCESSFUL.....");
+		System.out.println("\tCOPIES AVAILABLE : "+x);
 	}
-
-class Teamlead extends Employee{
-
-		void read_teamlead() {
-			input();
-			boolean a=false;
-			while(a==false) {
-			System.out.print("BASIC   PAY  [40000 - 50000] : ");
-			basic_pay=sc.nextDouble();
-			if(basic_pay>50000 || basic_pay<40000) {
-				System.out.println("SORRY!!!!!! BASIC  PAY FOR TEAMLEAD  MUST BETWEEN  [40000 - 50000] \nTRY AGAIN.....");
-				a=false;
-			}
-			else
-				a=true;
-		}
-			System.out.println("=================================================================================");
+	void read_book()
+	{
+		read_publ();
+		System.out.print("Enter author book:");
+		author=sc.next();
 	}
-
-		static void search(Teamlead arr[],int key,int n) {
-			for(int i=0;i<n;i++) {
-				if (arr[i].emp_id==key) {
-					System.out.println("       EMPLOYEE  FOUND  ");
-					arr[i].display();
-					arr[i].salary_slip();
-				}
-				else {
-					System.out.println("  EMPLOYEEE   WITH  ID  "+ key +"  NOT FOUND IN  TEAMLEAD  ");
-				}
-			}
-		}
+	void display_book()
+	{
+		System.out.println("title \tprice \tcopy \tauthor");
+		display();
+		System.out.println("\t"+author);
 	}
-
-class Asst_pro_manager extends Employee{
-		void read_Asst_pro_manager() {
-			input();
-			boolean a=false;
-			while(a==false) {
-			System.out.print("BASIC   PAY  [50000 - 60000] : ");
-			basic_pay=sc.nextDouble();
-			if(basic_pay>60000 || basic_pay<50000) {
-				System.out.println("SORRY!!!!!! BASIC  PAY FOR TEAMLEAD  MUST BETWEEN  [50000 - 60000] \nTRY AGAIN.....");
-				a=false;
-			}
-			else
-				a=true;
-		}
-			System.out.println("=================================================================================");
+}
+//======================= CLASS magazine =======================//
+class magazine extends publication
+{
+	private int order_qty; //data members
+	private String issue_date;
+	void receive_issue(String new_issue_data)
+	{
+		System.out.println("ENTER NEW COPIES ORDER :");
+		order_qty=sc.nextInt();
+		setcopies(order_qty);
+		issue_date=new_issue_data;
+		System.out.println("\t THE MAGAZINE "+gettitle()+" \n\t WITH ISSUE DATE "+issue_date+"AVAILABLE");
 	}
-
-		static void search(Asst_pro_manager arr[],int key,int n) {
-			for(int i=0;i<n;i++) {
-				if (arr[i].emp_id==key) {
-					System.out.println("       EMPLOYEE  FOUND  ");
-					arr[i].display();
-					arr[i].salary_slip();
-				}
-				else {
-					System.out.println("  EMPLOYEEE   WITH  ID  "+ key +"  NOT FOUND IN  TEAMLEAD  ");
-				}
-			}
-		}
+	void read_mag()
+	{
+		read_publ();
+		System.out.print("Enter the Current Issue Date [dd/mm/yyyy]:");
+	    issue_date=sc.next();
 	}
-
-class Pro_manager extends Employee{
-	void read_Pro_manager() {
-			input();
-			boolean a=false;
-			while(a==false) {
-			System.out.print("BASIC   PAY  [60000 - 70000] : ");
-			basic_pay=sc.nextDouble();
-			if(basic_pay>70000 || basic_pay<60000) {
-				System.out.println("SORRY!!!!!! BASIC  PAY FOR TEAMLEAD  MUST BETWEEN  [60000 - 70000] \nTRY AGAIN.....");
-				a=false;
-			}
-			else
-				a=true;
-			}
-			System.out.println("=================================================================================");
+	void display_mag()
+	{
+		System.out.println("title \tprice \tcopy \tdate");
+		display();
+		System.out.println("\t"+issue_date);
 	}
-
-		static void search(Pro_manager arr,int key) {
-			if (arr.emp_id==key) {
-				System.out.println("       EMPLOYEE  FOUND  ");
-				arr.display();
-				arr.salary_slip();
-			}
-			else {
-				System.out.println("  EMPLOYEEE   WITH  ID  "+ key +"  NOT FOUND IN  TEAMLEAD  ");
-			}
-		}
-	}
-
-public class Main {
-	public static void main(String[] args) {
-			Scanner sc=new Scanner(System.in);
-			Programmer p[]=new Programmer[3];
-			Teamlead t[]=new Teamlead[3];
-			Asst_pro_manager a[]=new Asst_pro_manager[2];
-			Pro_manager m=new Pro_manager();
+}
+//======================= CLASS Main =======================//
+class Main
+{
+	public static void main(String[] args)
+	{
+		Scanner sc=new Scanner(System.in);
+		book b=new book();
+		magazine m=new magazine();
+		int  outer=1 ;
+		do
+		{
+			System.out.println("\n\n\tCHOOSE ONE OF THE FOLLOWING....\n\n\t1.BOOK \t\t\t2.MAGAZINE"+ "\n\n\t3.TOTAL SALE AMOUNT\t4.REVENUE OF PUBLICATION\n\n");
+			System.out.print("Choice :");
+			int k=sc.nextInt();
+			int a;
 			aa:
-			do {
-				System.out.println("=================================================================================");
-				System.out.println(" MAIN  MENU  \n\n1.PROGRAMMER \n2.TEAM LEAD \n3.ASSISTANT PROJECT MANAGER \n4.PROJECT MANAGER \n5.EMPLOYEE SEARCH \n6.EXIT");
-				System.out.print("Choice::");
-				int k=sc.nextInt();
-				System.out.println("=================================================================================");
-				int op;
-				int assign1=0,assign2=0,assign3=0,assign4=0;
-				switch(k) {
-
-				case 1:
-					do {
-						System.out.print("\tPROGRAMMER  MENU .....\n\t1. INPUT \n\t2. DISPLAY  \n\t3. EXIT FROM PROGRAMMER \n\tChoice::");
-						op=sc.nextInt();
-						System.out.println("=================================================================================");
-						if(op==1)
-						{
-							assign1=6;
-							for (int i=0;i<3;i++) {
-								p[i]=new Programmer();
-								p[i].read_programmer();
-								p[i].salary();
-							}
-						}
-						else if(op==2  && assign1==6)
-						{
-							for (int i=0;i<3;i++) {
-								p[i].display();
-								p[i].salary_slip();
-							}
-						}
-						else if(op==2 && assign1!=6)
-							System.out.println("  MEMORY  NOT  ALLOCATED  TO  PROGRAMMERS  DETAIL  YET...  ");
-
-						System.out.println("===================================================================================================");
-					}while(op!=3);
-					break;
-
-				case 2:
-					do {
-						System.out.print("\tTEAMLEAD  MENU .....\n\t1. INPUT \n\t2. DISPLAY  \n\t3. EXIT FROM TEAMLEAD SECTION  \n\tChoice::");
-						op=sc.nextInt();
-						System.out.println("===================================================================================================");
-						if(op==1)
-						{
-							assign2=4;
-							for (int i=0;i<3;i++) {
-								t[i]=new Teamlead();
-								t[i].read_teamlead();
-								t[i].salary();
-							}
-						}
-						else if(op==2 && assign2==4)
-						{
-							for (int i=0;i<3;i++) {
-								t[i].display();
-								t[i].salary_slip();
-						}
-					}
-						else if(op==2 && assign1!=6)
-							System.out.println("  MEMORY  NOT  ALLOCATED  TO  TEAMLEADS  DETAIL  YET...  ");
-						System.out.println("===================================================================================================");
-					}while(op!=3);
-					break;
-
-				case 3:
-					do {
-						System.out.print("\tASSISTANT MANAGER MENU .....\n\t1. INPUT \n\t2. DISPLAY  \n\t3. EXIT FROM  ASSISTANT MANAGER \n\tChoice::");
-						op=sc.nextInt();
-						System.out.println("===================================================================================================");
-						if(op==1)
-						{
-							assign3=2;
-							for (int i=0;i<2;i++) {
-								a[i]=new Asst_pro_manager();
-								a[i].read_Asst_pro_manager();
-								a[i].salary();
-							}
-						}
-						else if(op==2 && assign3==2)
-						{
-							for (int i=0;i<2;i++) {
-								a[i].display();
-								a[i].salary_slip();
-						}
-					}
-						else if(op==2 && assign1!=6) 										System.out.println("  MEMORY  NOT  ALLOCATED  TO  PROGRAMMERS  DETAIL  YET...  ");
-						System.out.println("===================================================================================================");
-					}while(op!=3);
-					break;
-
-				case 4:
-					do {
-						System.out.print("\tPROJECT MANAGER MENU .....\n\t1. INPUT \n\t2. DISPLAY  \n\t3. EXIT FROM  PROJECT  MANAGER  SECTION \n\tChoice::");
-						op=sc.nextInt();
-						System.out.println("===================================================================================================");
-						if(op==1)
-						{
-								assign4=1;
-								m.read_Pro_manager();
-								m.salary();
-						}
-						else if(op==2 && assign4==1)
-						{
-								m.display();
-								m.salary_slip();
-						}
-						else if(op==2 && assign1!=6) System.out.println("  MEMORY  NOT  ALLOCATED  TO  PROGRAMMERS  DETAIL  YET...  ");
-						System.out.println("===================================================================================================");
-					}while(op!=3);
-					break;
-
-				case 5:
-					String des;
-					int key;
-					System.out.print("ENTER  THE  DISIGNATION  OF  EMPLOYEE  YOU  WANT  TO  SEARCH : ");
-					des=sc.next();
-					System.out.print("Enter Emplyee ID:");
-					key=sc.nextInt();
-					if(des.toLowerCase().equals("programmer"))
+			if (k==1)
+			{
+				do
+				{
+					int c;
+					System.out.print("\n\t\tMENU FOR BOOK\n");
+					System.out.print("\t1.read book \t\t2.display \n\t3.sale copies \t\t4.order copies");
+					System.out.print("\n\tChoice::");
+					c=sc.nextInt();
+					switch (c)
 					{
-						Programmer.search(p,key,6);
+					case 1 :
+						System.out.println("==============================================================================\n");
+						b.read_book();
+						System.out.println("==============================================================================\n");
+						break;
+					case 2:
+						System.out.println("==============================================================================\n");
+						b.display_book();
+						System.out.println("==============================================================================\n");
+						break;
+					case 3:
+						System.out.println("==============================================================================\n");
+						System.out.print("HOW MANY COPIES YOU(for customer) WANT : ");
+						int n1=sc.nextInt();
+						b.sale_copy(n1);
+						System.out.println("==============================================================================\n");
+						break;
+					case 4:
+						System.out.println("==============================================================================\n");
+						System.out.print("ENTER COPIES WANT TO ORDER(for shop): ");
+						int n2=sc.nextInt();
+						b.order_copies(n2);
+						System.out.println("==============================================================================\n");
+						break;
+					default:
+						System.out.println("Invalid");
 					}
-					else if(des.toLowerCase().equals("teamlead"))
+					System.out.println("Do you want to continue with book section[1/0]\n\t1.YES \t\t0.NO");
+					System.out.print("\tChoice::");
+					a=sc.nextInt();
+					if (a==0)
 					{
-						Teamlead.search(t, key, 4);
-					}
-					else if(des.toLowerCase().equals("assistant"))
-					{
-						Asst_pro_manager.search(a, key, 2);
-					}
-					else if(des.toLowerCase().equals("manager"))
-					{
-						Pro_manager.search(m, key);
-
-					}
-					else {
-						System.out.println("INVALID INPUT");
-					}
-					System.out.println("===================================================================================================");
-					break;
-
-				case 6:
-					System.out.print("Would you like to Exit\n\t1.YES\n\t2.No\n\tChoice::");
-					int temp=sc.nextInt();
-					if(temp==1)
 						break aa;
-				default:
-					System.out.println("   INVALID   ");
-				}
-
-			}while(true);
-			sc.close();
+					}
+				}while(a==1);
+			}
+			else if(k==2)
+			{
+				mm:
+					do
+				    {
+					System.out.println("\n\t\tMENU FOR MAGAZINE....\n\t\t1.READ   \t\t2.DISPLAY \n\t3.SALE MAGAZINE COPIES \t4.RECEIVE  NEW ISSUE\n");
+					int d;
+					System.out.print("\n\tChoice::");
+					d =sc.nextInt();
+					switch(d)
+						{
+						case 1:
+							System.out.println("==============================================================================\n");
+							m.read_mag();
+							System.out.println("==============================================================================\n");
+							break;
+						case 2:
+							System.out.println("==============================================================================\n");
+							m.display_mag();
+							System.out.println("==============================================================================\n");
+							break;
+						case 3:
+							System.out.println("==============================================================================\n");
+							System.out.println("HOW MANY COPIES YOU WANT(customer)??  ");
+							int n3=sc.nextInt();
+							m.sale_copy(n3);
+							System.out.println("==============================================================================\n");
+							break;
+						case 4:
+							System.out.println("==============================================================================\n");
+							System.out.println("ENTER THE NEW ISSUE DATE [dd/mm/yyyy]: ");
+							String date=sc.next();
+							m.receive_issue(date);
+							System.out.println("==============================================================================\n");
+							break;
+						}
+						System.out.println("DO YOU WANT TO CONTIUNE WITH MAGAZINE SECTION [1/0] \n\t1.YES\t2.NO");
+						System.out.print("\tChoice::");
+						a=sc.nextInt();
+						if (a==0)
+						{
+							break mm;
+						}
+					    }while (a==1);
+			}
+			else if (k==3)
+			{
+				System.out.println("\n\tTOTAL SALE AMOUNT IS(to be paid by customer)  = "+(b.getTotal()+m.getTotal())+ "  ");
+			}
+			else if (k==4)
+			{
+				System.out.println("\n\tTOTAL REVENUE OF PUBLICATION IS  :  "+ (b.getCopies()*b.getprice() + m.getCopies()*m.getprice()));
+			}
+			else
+			{
+				System.out.println("Invalid Key....");
+			}
+			System.out.println("DO YOU WANT TO CONTINUE WITH PUBLICATION ???\n\t1.CONTINUE \t0.TERMINATE");
+			outer=sc.nextInt();
 		}
+		while (outer!=0);
+		sc.close();
+	}
 }
