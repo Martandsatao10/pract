@@ -1,0 +1,77 @@
+import java.util.*;
+
+public class GenericPropertyCounter{
+	
+	public static <T> int countProperty(List <T> collection,PropertyChecker <T> checker){
+		int count=0;
+		for(T element : collection){
+			if(checker.check(element)){
+				count++;
+			}
+		}
+		return count;
+	}
+	
+	
+	@FunctionalInterface
+	interface PropertyChecker <T>{
+		boolean check(T element);
+	}
+	
+	public static boolean isEven(int num){
+		return num%2==0;
+	}
+	public static boolean isOdd(int num){
+		return num%2 !=0;
+	}
+	
+	public static boolean isPrime(int num){
+		if(num<=1) return false;
+		for(int i=2;i<=Math.sqrt(num);i++){
+			if(num%i == 0){
+				return false;
+			}
+		}
+		return true;
+		
+	}
+	
+	public static boolean isPalindrome(int num){
+		int original=num;
+		int reverse=0;
+		while(num!=0){
+			reverse=reverse*10+num%10;
+			num/=10;
+		}
+		return reverse==original;
+	}
+	
+	public static void main(String[] args){
+		List<Integer> numbers=new ArrayList<Integer>();
+		
+		
+		
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter number you want in List:");
+		int a=sc.nextInt();
+		for(int i=0;i<a;i++){
+			System.out.println("Enter element at:"+i);
+			int x=sc.nextInt();
+			numbers.add(x);
+		}
+		
+		int evenCount= countProperty(numbers, num -> isEven(num));
+		System.out.println("Even number in List-"+evenCount);
+		
+		int oddCount=countProperty(numbers , num -> isOdd(num));
+		System.out.println("odd number in List-"+oddCount);
+		
+		int primecount=countProperty(numbers,num -> isPrime(num));
+		System.out.println("Prime number in List-"+primecount);
+		
+		int palindromeCount=countProperty(numbers, num -> isPalindrome(num));
+		System.out.println("Palindrome number in List-"+palindromeCount);
+		
+		
+	}
+}
